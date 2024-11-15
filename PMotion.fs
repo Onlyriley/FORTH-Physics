@@ -42,6 +42,29 @@ FVARIABLE height
     ;
 
 
+\ Projectile Motion Calculations (requires radians, not degrees)
+: velo_x ( -- vx )
+    get_velo get_angle Fcos F* \ vx = velocity * cos(angle)
+    ;
+
+: velo_y ( -- vy )
+    get_velo get_angle Fsin F* \ vy = velocity * sin(angle)
+    ;
+
+: time_of_flight ( -- t )
+    2e get_velo F*
+    get_angle FSIN
+    F*
+    get_gravity F/
+    ;
+
+: range ( -- r )
+    get_velo get_velo F*
+    2e get_angle F*
+    FSIN
+    F*
+    get_gravity F/
+    ;
 
 \ Basic equations to PRINT (also pops, values)
 : print_velo ( -- )
