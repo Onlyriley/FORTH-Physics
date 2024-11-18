@@ -16,9 +16,3 @@
     f*
     f+
     ;
-
-: get_distance_at_time ( s0 v0 t a -- s )
-    {: s0 v0 t a | f. f. f. f. :}
-    s0 f@ f.
-    
-    ;
