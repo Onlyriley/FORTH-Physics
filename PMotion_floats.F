@@ -25,27 +25,6 @@ FVARIABLE height
     height F!
     ;
 
-\\ This made me so angry i spent over 2 hours on it and it does not work.........
-: push_to_arr ( value -- )
-    max_height_index
-    max_height_arr @ cells + F!
-    DROP
-    \ Increment the index
-    max_height_index @
-    1 +
-    max_height_index !
-;
-
-: get_from_arr ( value -- )
-    cells max_height_arr + F@ F.
-;
-
-\ Functions will remove the values they use
-
-\ Functions to GET the value of a variable and add to stack
-\ Ex: 2.0e get_gravity F* F.
-\ Rather than: 2.0e g F@ F* F.
-
 : get_velo ( -- )
     velocity F@
     ;
@@ -56,7 +35,6 @@ FVARIABLE height
 
 : get_height ( -- )
     height F@
-    push_to_arr
     ;
 
 : get_gravity ( -- )
@@ -120,14 +98,18 @@ FVARIABLE height
     g F.
     ;
 
-: print_acc ( deltaVelocity deltaAcceleration -- acceleration )
-    /
-    ;
+: x_at_t ( t -- )
+    velo_x F* F.
+;
 
-: print_force ( mass acceleration -- force ) * ;
+: y_at_t ( t -- )
+    FDUP FDUP F* \ T^2
+    4.9e * \ 4.9 * T^2
+    FSWAP \ Get T on top
+    velo_y \ Initial y on stack
+    F* \ Initial y time time
+    FSWAP F-
+    get_height F+
+    F.
 
-\ Kinematic equations
-: print_velo_at_time ( initialVelocity acceleration time -- v )
-    *
-    +
-    ;
+;
