@@ -99,17 +99,27 @@ FVARIABLE height
     ;
 
 : x_at_t ( t -- )
-    velo_x F* F.
+    velo_x F*
 ;
 
 : y_at_t ( t -- )
     FDUP FDUP F* \ T^2
-    4.9e * \ 4.9 * T^2
+    4.9e F* \ 4.9 * T^2
     FSWAP \ Get T on top
     velo_y \ Initial y on stack
     F* \ Initial y time time
     FSWAP F-
     get_height F+
-    F.
+;
 
+: recursive_pos ( timeStart -- )
+    fdup
+    y_at_t 0e f< 
+    if 
+    fdrop
+    else
+    fdup fdup
+    x_at_t F.
+    y_at_t F.
+    1e f+ recurse then
 ;

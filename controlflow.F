@@ -16,3 +16,9 @@ squaresloop
     else
     dup 1 - recurse * then ;
 5 factorial .
+
+\ Assuming coeff restitution is .8 
+: bounce ( height -- n )
+    fdup 0.01e f<= if fdrop
+    else
+    fdup 0.8e recurse f* then ;
